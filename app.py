@@ -10,6 +10,9 @@ with app.app_context():
     db.create_all()
     db.session.commit()
     
+# / - Página inicial com login e registro
+# /inicio - Página principal após login
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
     error = None
@@ -39,7 +42,7 @@ def index():
 @app.route('/inicio')
 def main():
     if 'user_id' in session:
-        return render_template('index.html')
+        return render_template('main.html')
     return redirect('/')
 
 @app.route('/logout')
