@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///redaplay.db'
 db.init_app(app)
 
@@ -28,18 +29,19 @@ def index():
             else:
                 error = 'Credenciais inválidas.'
         elif action == 'register':
-            if User.query.filter_by(username=username).first():
-                error = 'Nome de usuário já existente.'
+            email = request.form['email']
+            if User.query.filter((User.username == username) | (User.email == email)).first():
+                error = 'Nome de usuário ou E-mail já existente.'
             else:
                 hashed_pw = generate_password_hash(password)
-                new_user = User(username=username, password=hashed_pw)
+                new_user = User(username=username, email=email, password=hashed_pw)
                 db.session.add(new_user)
                 db.session.commit()
                 session['user_id'] = new_user.id
-                return redirect('/inicio')
+                return redirect('/')
     return render_template('index.html', error=error)
 
-@app.route('/inicio')
+@app.route('/inicio', methods=['GET','POST'])
 def main():
     if 'user_id' in session:
         return render_template('main.html')
