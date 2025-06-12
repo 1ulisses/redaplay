@@ -1,14 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Jornada de Aprendizagem</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>ínicio</title>
-    
 </head>
 <body>
-    
+    <div class="container">
+        <header class="cabecalho">
+            <h1>Minha Jornada de Aprendizagem</h1>
+            <div class="icones-cabecalho">
+                <span class="icone">❤️ 5</span>
+                <span class="icone">🏆 100</span>
+            </div>
+        </header>
+
+        <div class="conteudo-principal">
+            <nav class="barra-lateral">
+                <ul>
+                    <li class="ativo">Unidade 1</li>
+                    <li>Unidade 2</li>
+                    <li>Unidade 3</li>
+                    <li>Unidade 4</li>
+                </ul>
+            </nav>
+
+            <section class="progresso-unidade">
+                <h2>Progresso da Unidade Atual</h2>
+                <div class="lista-licoes">
+                    <a href="licao1.html" class="item-licao" data-id-licao="1">
+                        <span class="status-licao" id="status-1"></span>
+                        <span class="titulo-licao">Lição 1: Saudações</span>
+                    </a>
+                    <a href="licao2.html" class="item-licao desabilitado bloqueado" data-id-licao="2">
+                        <span class="status-licao" id="status-2"></span>
+                        <span class="titulo-licao">Lição 2: Frases Básicas</span>
+                    </a>
+                    <a href="licao3.html" class="item-licao desabilitado bloqueado" data-id-licao="3">
+                        <span class="status-licao" id="status-3"></span>
+                        <span class="titulo-licao">Lição 3: Apresentações</span>
+                    </a>
+                    <a href="licao4.html" class="item-licao desabilitado bloqueado" data-id-licao="4">
+                        <span class="status-licao" id="status-4"></span>
+                        <span class="titulo-licao">Lição 4: Fazendo Perguntas</span>
+                    </a>
+                    <a href="licao5.html" class="item-licao desabilitado bloqueado" data-id-licao="5">
+                        <span class="status-licao" id="status-5"></span>
+                        <span class="titulo-licao">Lição 5: Membros da Família</span>
+                    </a>
+                </div>
+            </section>
+
+            <aside class="desafios">
+                <h2>Desafios</h2>
+                <div class="item-desafio">Desafio Diário</div>
+                <div class="item-desafio">Missão do Fim de Semana</div>
+            </aside>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 </html>

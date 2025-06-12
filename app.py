@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, User
+from models import db, User, Question, Quiz
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -46,6 +46,18 @@ def main():
     if 'user_id' in session:
         return render_template('main.html')
     return redirect('/')
+
+@app.route('/quiz/<int:quiz_id>', methods=['GET', 'POST'])
+def quiz(quiz_id):
+    quiz = Quiz.query.get_or_404(quiz_id)
+    if request.method == 'POST':
+        score = 0
+        for question in quiz.questions:
+            user_answer = request.form.get(f'question_{question.id}')
+            if user_answer == question.correct_answer:
+                score += 1
+        return f"Your score: {score}/{len(quiz.questions)}"
+    return render_template('quiz.html', quiz=quiz)
 
 @app.route('/logout')
 def logout():
