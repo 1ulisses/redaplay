@@ -63,6 +63,23 @@ def login():
                 return redirect('/login')
     return render_template('index.html', error=error)
 
+@app.route('/update', methods=['POST'])
+def update():
+    return
+    # on button action=/update on form
+    # request form of user
+    # .query.filter_by(email=oldemail).first()
+    # if client set new ones
+    # redirect to /inicio
+    
+@app.route('/delete', methods=['POST'])
+def delete():
+    return
+    # on button action=/delete on form
+    # request form erase
+    # if client
+    # .delete and commit
+
 @app.route('/inicio', methods=['GET','POST'])
 def inicio():
     user = User.query.get(session['user_id'])
@@ -73,10 +90,25 @@ def logout():
     session.pop('user_id', None)
     return redirect('/')
 
-# debug
 @app.route('/lesson1')
 def lesson1():
     return render_template('/lessons/lesson1.html')
+
+@app.route('/lesson2')
+def lesson2():
+    return render_template('/lessons/lesson2.html')
+
+@app.route('/lesson3')
+def lesson3():
+    return render_template('/lessons/lesson3.html')
+
+@app.route('/lesson4')
+def lesson4():
+    return render_template('/lessons/lesson4.html')
+
+@app.route('/lesson5')
+def lesson5():
+    return render_template('/lessons/lesson5.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
