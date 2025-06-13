@@ -1,237 +1,246 @@
-/* Fundo do corpo da página */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  list-style: none;
+}
+
+/* página principal, imagem de fundo */
 body {
-    font-family: sans-serif;
-    background-color: #fce4ec; /* Rosa claro de fundo */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #e2e2e2, #f0caff);
 }
 
-/* Contêiner principal do layout */
+/* container layout principal */
 .container {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    overflow: hidden;
+  position: relative;
+  width: 850px;
+  min-height: 550px;
+  height: auto;
+  background: #fff;
+  margin: 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  overflow: visible;
 }
 
-/* Cabeçalho superior */
-.cabecalho {
-    background-color: #9c27b0; /* Roxo do cabeçalho */
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.2em;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+/* cabecalho */
+.header {
+  background-color: #c351ff;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
-.cabecalho h1 {
-    margin: 0;
-    font-size: 1.5em;
+.header h1 {
+  margin: 0;
+  font-size: 1.5em;
 }
 
-.icones-cabecalho .icone {
-    margin-left: 15px;
+.header-icons .icon {
+  margin-left: 15px;
 }
 
-/* Conteúdo principal (barra lateral, progresso da unidade, desafios) */
-.conteudo-principal {
-    display: flex;
-    padding: 20px;
+/* barra lateral, progresso e desafios */
+.main-content {
+  display: flex;
+  padding: 20px;
 }
 
-/* Barra lateral de navegação */
-.barra-lateral {
-    width: 200px;
-    padding-right: 20px;
-    border-right: 1px solid #eee;
+/* navegacao barra lateral */
+.sidebar {
+  width: 200px;
+  padding-right: 20px;
+  border-right: 1px solid #eee;
 }
 
-.barra-lateral ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.barra-lateral li {
-    padding: 10px 0;
-    color: #6a1b9a; /* Roxo mais escuro para itens da barra lateral */
-    cursor: pointer;
-    font-weight: bold;
+.sidebar li {
+  padding: 10px 0;
+  color: #6a1b9a;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.barra-lateral li.ativo {
-    color: #4a148c;
-    border-left: 4px solid #9c27b0;
-    padding-left: 16px;
+.sidebar li.active {
+  color: #4a148c;
+  border-left: 4px solid #c351ff;
+  padding-left: 16px;
 }
 
-/* Seção de progresso da unidade */
-.progresso-unidade {
-    flex-grow: 1;
-    padding: 0 20px;
+/* progresso de unidade */
+.unit-progress {
+  flex-grow: 1;
+  padding: 0 20px;
 }
 
-.progresso-unidade h2, .desafios h2 {
-    color: #6a1b9a;
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.3em;
+.unit-progress h2,
+.challenges h2 {
+  color: #c351ff;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.3em;
 }
 
-.lista-licoes {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.lesson-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* Estilo base para cada item de lição */
-.item-licao {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    background-color: #f3e5f5; /* Roxo mais claro para itens de lição */
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
+/* items de licao */
+.lesson-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  background-color: #f3e5f5;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
-/* Efeito hover apenas para lições ativas/não bloqueadas */
-.item-licao:hover:not(.desabilitado):not(.bloqueado) {
-    background-color: #e1bee7; /* Roxo ainda mais claro ao passar o mouse */
+.lesson-item:hover:not(.disabled):not(.locked) {
+  background-color: #e1bee7;
 }
 
-/* Estilos base para o círculo de status da lição */
-.status-licao {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%; /* Transforma em círculo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 15px;
-    font-size: 1.2em;
-    color: white; /* Cor padrão do texto dos símbolos */
-    font-weight: bold;
-    box-sizing: border-box; /* Inclui padding e borda na largura/altura total do elemento */
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+/* status de licao */
+.lesson-status {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 1.2em;
+  color: white; 
+  font-weight: bold;
+  box-sizing: border-box; 
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Estilos para uma lição CONCLUÍDA */
-.item-licao.concluido .status-licao {
-    background-color: #4CAF50; /* Verde */
-    border: 2px solid #4CAF50;
+/* licoes completa */
+.lesson-item.completed .lesson-status {
+  background-color: #4caf50; 
+  border: 2px solid #4caf50;
 }
-.item-licao.concluido .status-licao::before {
-    content: '✔'; /* Símbolo de checkmark */
-}
-
-/* Estilos para uma lição ATIVA / PRÓXIMA (não concluída, não bloqueada) */
-.item-licao:not(.concluido):not(.desabilitado):not(.bloqueado) .status-licao {
-    background-color: #9c27b0; /* Roxo, indicando pronta para iniciar */
-    border: 2px solid #9c27b0;
-}
-.item-licao:not(.concluido):not(.desabilitado):not(.bloqueado) .status-licao::before {
-    content: '→'; /* Símbolo de seta */
+.lesson-item.completed .lesson-status::before {
+  content: "✔"; 
 }
 
-/* Estilos para uma lição DESABILITADA / BLOQUEADA */
-.item-licao.desabilitado.bloqueado {
-    opacity: 0.6; /* Deixa com aparência de desabilitado */
-    cursor: not-allowed;
-    pointer-events: none; /* Desabilita o clique */
+.lesson-item:not(.completed):not(.disabled):not(.locked) .lesson-status {
+  background-color: #c351ff; 
+  border: 2px solid #c351ff;
+}
+.lesson-item:not(.completed):not(.disabled):not(.locked)
+  .lesson-status::before {
+  content: "→"; /* Arrow symbol */
 }
 
-.item-licao.desabilitado.bloqueado .status-licao {
-    background-color: #bdbdbd; /* Cinza */
-    border: 2px solid #bdbdbd;
-}
-.item-licao.desabilitado.bloqueado .status-licao::before {
-    content: '🔒'; /* Símbolo de cadeado */
-    font-size: 1em; /* Ajusta o tamanho do cadeado se necessário */
-    color: #424242; /* Cor mais escura para o símbolo do cadeado */
+/* licoes desligadas/trancadas */
+.lesson-item.disabled.locked {
+  opacity: 0.6; 
+  cursor: not-allowed;
+  pointer-events: none; 
 }
 
-.titulo-licao {
-    font-size: 1.1em;
-    color: #333;
+.lesson-item.disabled.locked .lesson-status {
+  background-color: #bdbdbd; 
+  border: 2px solid #bdbdbd;
+}
+.lesson-item.disabled.locked .lesson-status::before {
+  content: "🔒"; 
+  font-size: 1em; 
+  color: #424242; 
 }
 
-/* Seção de desafios */
-.desafios {
-    width: 250px;
-    padding-left: 20px;
-    border-left: 1px solid #eee;
+.lesson-title {
+  font-size: 1.1em;
+  color: #333;
 }
 
-.item-desafio {
-    background-color: #e0f2f7; /* Azul claro para desafios */
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    color: #01579b;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+/* desafios */
+.challenges {
+  width: 250px;
+  padding-left: 20px;
+  border-left: 1px solid #eee;
 }
 
-/* Estilização para as páginas de vídeo (licaoX.html) */
-.container-pagina-video {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 30px;
-    text-align: center;
+.challenge-item {
+  background-color: #e0f2f7;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  color: #01579b;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.container-pagina-video h1 {
-    color: #9c27b0;
-    margin-bottom: 30px;
+/* pagina de video */
+.video-page-container {
+  background-color: #ffffff;
+  border-radius: 30px; /* changed from 10px to 30px */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 30px;
+  text-align: center;
+  overflow-x: auto;
 }
 
-.wrapper-video {
-    position: relative;
-    padding-bottom: 56.25%; /* Proporção 16:9 para o vídeo */
-    height: 0;
-    overflow: hidden;
-    background-color: #000;
-    border-radius: 8px;
+.video-page-container h1 {
+  color: #c351ff;
+  margin-bottom: 30px;
 }
 
-.wrapper-video iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; 
+  height: 0;
+  overflow: visible;
+  background-color: #000;
+  border-radius: 8px;
 }
 
-.botao-voltar {
-    display: inline-block;
-    background-color: #9c27b0;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 30px;
-    transition: background-color 0.3s ease;
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.botao-voltar:hover {
-    background-color: #7b1fa2;
+.back-button {
+  display: inline-block;
+  background-color: #c351ff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #7b1fa2;
 }

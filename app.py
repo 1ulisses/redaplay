@@ -64,5 +64,10 @@ def logout():
     session.pop('user_id', None)
     return redirect('/')
 
+# debug
+@app.route('/lesson1')
+def lesson1():
+    return render_template('lesson1.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
