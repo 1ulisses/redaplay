@@ -23,11 +23,12 @@ with app.app_context():
         db.session.add(new_user)
     db.session.commit()
     
-# / - Página inicial com login e registro
-# /inicio - Página principal após login
-    
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def welcome():
+    return render_template('welcome.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
     error = None
     if request.method == 'POST':
         action = request.form.get('action')
@@ -59,7 +60,7 @@ def index():
                 db.session.add(new_user)
                 db.session.commit()
                 session['user_id'] = new_user.id
-                return redirect('/') 
+                return redirect('/login')
     return render_template('index.html', error=error)
 
 @app.route('/inicio', methods=['GET','POST'])
@@ -75,7 +76,7 @@ def logout():
 # debug
 @app.route('/lesson1')
 def lesson1():
-    return render_template('lesson1.html')
+    return render_template('/lessons/lesson1.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

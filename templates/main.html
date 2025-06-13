@@ -6,7 +6,7 @@
     <title>Inicio - Redaplay</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
+      href="{{ url_for('static', filename='main.css') }}"
     />
     <link
       rel="icon"
@@ -22,19 +22,20 @@
         <div class="header-icons">
           <span class="icon">🔥 {{ user.streak }}</span>
           <span class="icon">💎 {{ user.diamonds }}</span>
+          <span class="icon">🔔</span>
+          <span class="icon">👤</span>
         </div>
         <a href="/logout" class="logout-button">
-          <span class="icon">↪ Sair</span>
+          <span class="icon">↪</span>
         </a>
       </header>
 
       <div class="main-content">
         <nav class="sidebar">
           <ul>
-            <li class="active">Unidade 1</li>
-            <li>Unidade 2</li>
-            <li>Unidade 3</li>
-            <li>Unidade 4</li>
+            <li class="active">🏠 Início</li>
+            <li>📖 Lições</li>
+            <li>✍️ Exercícios</li>
           </ul>
         </nav>
 
@@ -51,7 +52,7 @@
               data-id-lesson="2"
             >
               <span class="lesson-status" id="status-2"></span>
-              <span class="lesson-title">Lição 2: Frases Básicas</span>
+              <span class="lesson-title">Lição 2: Quiz de Redação</span>
             </a>
             <a
               href="lesson3.html"
@@ -59,7 +60,7 @@
               data-id-lesson="3"
             >
               <span class="lesson-status" id="status-3"></span>
-              <span class="lesson-title">Lição 3: Apresentações</span>
+              <span class="lesson-title">Lição 3: Escreva sua Introdução</span>
             </a>
             <a
               href="lesson4.html"
@@ -67,7 +68,7 @@
               data-id-lesson="4"
             >
               <span class="lesson-status" id="status-4"></span>
-              <span class="lesson-title">Lição 4: Fazendo Perguntas</span>
+              <span class="lesson-title">Lição 4: Aula</span>
             </a>
             <a
               href="lesson.html"
@@ -75,18 +76,22 @@
               data-id-lesson="5"
             >
               <span class="lesson-status" id="status-5"></span>
-              <span class="lesson-title">Lição 5: Membros da Família</span>
+              <span class="lesson-title"
+                >Lição 5: Quiz de Argumentação e Gramática</span
+              >
             </a>
           </div>
         </section>
 
         <aside class="challenges">
-          <h2>Desafios</h2>
-          <div class="challenge-item">Desafio Diário</div>
-          <div class="challenge-item">Missão do Fim de Semana</div>
+          <h2>Desafios Diários</h2>
+          <div class="challenge-item">Escreva 1 Introdução.</div>
+          <div class="challenge-item">
+            Identifique 3 conectivos em um texto.
+          </div>
         </aside>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
   </body>
 </html>

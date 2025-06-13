@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lição 4: Aula</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+</head>
+<body>
+    <div class="page-container-video">
+        <h1>Lição 4: Aula</h1>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com" title="Vídeo da Lição 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p>Bem-vindo à sua quarta lição! Aprenda os fundamentos da escrita.</p>
+        <p>Assista ao vídeo e prepare-se para a próxima etapa!</p>
+        <button id="complete-lesson-1-btn" class="main-button">Concluir Lição 4</button>
+        <a href="/inicio" class="back-button">Voltar para a Jornada</a>
+    </div>
+
+    <script>
+        // Script simples para Lição 1
+        document.addEventListener('DOMContentLoaded', () => {
+            const completeBtn = document.getElementById('complete-lesson-1-btn');
+            if (completeBtn) {
+                completeBtn.addEventListener('click', () => {
+                    localStorage.setItem('lesson-4-completed', 'true');
+                    alert('Lição 4 concluída! 🎉');
+                    window.location.href = '/inicio'; // Redirect back
+                });
+            }
+        });
+    </script>
+</body>
+</html>

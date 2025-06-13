@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redaplay - Redação</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='welcome.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png')}}"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div class="welcome-page">
+      <div class="welcome-container">
+        <h1 class="welcome-greeting">Bem-vindo(a) ao Redaplay!</h1>
+
+        <div class="image-placeholder">
+          <img
+            src="caminho/para/sua-imagem.png"
+            alt="Logotipo da Jornada"
+            class="welcome-main-image"
+          />
+        </div>
+
+        <a href="/login" class="start-journey-button">Iniciar Jornada!</a>
+      </div>
+    </div>
+  </body>
+</html>

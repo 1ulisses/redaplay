@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lição 5: Quiz de Redação</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+</head>
+<body>
+    <div class="page-container-video quiz-container">
+        <h1>Lição 5: Quiz de Redação</h1>
+
+        <div id="quiz-content">
+            <div id="question-container">
+                <p id="question-text"></p>
+                <div id="options-container">
+                    </div>
+            </div>
+            <div id="feedback-container" class="hidden">
+                <p id="feedback-text"></p>
+                <button id="next-question-btn" class="quiz-button hidden">Próxima Pergunta</button>
+            </div>
+            <div id="quiz-results" class="hidden">
+                <h2>Quiz Concluído!</h2>
+                <p>Você acertou <span id="score">0</span> de <span id="total-questions">0</span> perguntas.</p>
+                <button id="restart-quiz-btn" class="quiz-button">Refazer Quiz</button>
+            </div>
+            <button id="submit-answer-btn" class="quiz-button">Responder</button>
+        </div>
+
+        <a href="index.html" class="back-button">Voltar para a Jornada</a>
+    </div>
+
+    <script src="/static/lessons/quiz-script-lesson5.js"></script>
+</body>
+</html>

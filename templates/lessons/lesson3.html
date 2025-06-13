@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lição 3: Escreva sua Introdução</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+</head>
+<body>
+    <div class="page-container-video text-editor-container">
+        <h1>Lição 3: Escreva sua Introdução</h1>
+
+        <div class="instructions-box">
+            <h2>Instruções:</h2>
+            <p>Nesta lição, seu desafio é praticar a escrita da **introdução** de uma redação dissertativa-argumentativa.</p>
+            <p>Considere o tema: <strong>"Os desafios da inclusão digital no Brasil."</strong></p>
+            <ul>
+                <li>Sua introdução deve apresentar o tema de forma clara.</li>
+                <li>É importante contextualizar o assunto brevemente.</li>
+                <li>Apresente sua tese (seu ponto de vista principal) sobre o tema.</li>
+                <li>Se desejar, pode antecipar os argumentos que serão desenvolvidos nos próximos parágrafos (desenvolvimento).</li>
+                <li>Escreva com clareza, coesão e utilize a norma padrão da Língua Portuguesa.</li>
+                <li><strong>Objetivo:</strong> O objetivo principal é praticar a estrutura e a clareza da introdução.</li>
+            </ul>
+        </div>
+
+        <div class="text-editor-area">
+            <h3>Sua Introdução:</h3>
+            <textarea id="introduction-text" placeholder="Comece a escrever sua introdução aqui..." rows="15" maxlength="1000"></textarea>
+            <p class="char-count" id="char-count">0/1000 caracteres</p>
+        </div>
+
+        <button id="submit-introduction-btn" class="main-button">Concluir Lição</button>
+        <a href="/inicio" class="back-button">Voltar para a Jornada</a>
+    </div>
+
+    <script src="/static/lessons/script-lesson3.js"></script>
+</body>
+</html>

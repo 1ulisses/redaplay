@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background-image: url(/static/images/redacao1.jpg);
+  font-family: "Poppins";
+  background-color: #fce4ec;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #333;
+  line-height: 1.6;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.welcome-page {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.welcome-container {
+  flex: 1;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 40px 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  height: 100vh;
+  justify-content: center;
+  max-width: 400px;
+  width: 100%;
+  min-width: 0;
+}
+
+.welcome-greeting {
+  color: #c351ff;
+  font-size: 3.5em;
+  margin: 0;
+  font-weight: 700;
+}
+
+.image-placeholder {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-main-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.start-journey-button {
+  display: inline-block;
+  background-color: #c351ff;
+  color: white;
+  border-radius: 8px;
+  padding: 18px 40px;
+  text-decoration: none;
+  font-size: 1.6em;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.5px;
+  margin-top: 20px;
+}
+
+.start-journey-button:hover {
+  background-color: #7b1fa2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 600px) {
+  .welcome-container {
+    padding: 30px 20px;
+    gap: 20px;
+  }
+  .welcome-greeting {
+    font-size: 2.8em;
+  }
+  .start-journey-button {
+    font-size: 1.4em;
+    padding: 15px 30px;
+  }
+}
+
+@media (max-width: 400px) {
+  .welcome-container {
+    padding: 25px 15px;
+  }
+  .welcome-greeting {
+    font-size: 2.2em;
+  }
+  .start-journey-button {
+    font-size: 1.2em;
+    padding: 12px 25px;
+  }
+}
