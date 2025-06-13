@@ -66,6 +66,10 @@ body {
   margin-left: 20px;
 }
 
+.header-title {
+  font-weight: bold;
+}
+
 /* barra lateral, progresso e desafios */
 .main-content {
   display: flex;

@@ -74,7 +74,12 @@ def update():
     
 @app.route('/delete', methods=['POST'])
 def delete():
-    return
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        db.session.delete(user)
+        db.session.commit()
+        session.pop('user_id', None)
+    return redirect('/')
     # on button action=/delete on form
     # request form erase
     # if client
