@@ -1,14 +1,26 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Question, Quiz
+from datetime import date, timedelta
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///redaplay.db'
 db.init_app(app)
 
+new_user = User(
+    username='d',
+    email='d@d',
+    password=generate_password_hash('d'),
+    streak=5,
+    last_login=date.today(),
+    diamonds=10
+)
+
 with app.app_context():
     db.create_all()
+    if not User.query.filter_by(email='d@d').first():
+        db.session.add(new_user)
     db.session.commit()
     
 # / - Página inicial com login e registro
@@ -24,6 +36,15 @@ def index():
         if action == 'login':
             user = User.query.filter_by(username=username).first()
             if user and check_password_hash(user.password, password):
+                if user.last_login is not None:
+                    if user.last_login == date.today() - timedelta(days=1):
+                        user.streak += 1
+                    elif user.last_login != date.today():
+                        user.streak = 1
+                else:
+                    user.streak = 1
+                user.last_login = date.today()
+                db.session.commit()
                 session['user_id'] = user.id
                 return redirect('/inicio')
             else:
@@ -38,26 +59,13 @@ def index():
                 db.session.add(new_user)
                 db.session.commit()
                 session['user_id'] = new_user.id
-                return redirect('/')
+                return redirect('/') 
     return render_template('index.html', error=error)
 
 @app.route('/inicio', methods=['GET','POST'])
-def main():
-    if 'user_id' in session:
-        return render_template('main.html')
-    return redirect('/')
-
-@app.route('/quiz/<int:quiz_id>', methods=['GET', 'POST'])
-def quiz(quiz_id):
-    quiz = Quiz.query.get_or_404(quiz_id)
-    if request.method == 'POST':
-        score = 0
-        for question in quiz.questions:
-            user_answer = request.form.get(f'question_{question.id}')
-            if user_answer == question.correct_answer:
-                score += 1
-        return f"Your score: {score}/{len(quiz.questions)}"
-    return render_template('quiz.html', quiz=quiz)
+def inicio():
+    user = User.query.get(session['user_id'])
+    return render_template('main.html', user=user)
 
 @app.route('/logout')
 def logout():

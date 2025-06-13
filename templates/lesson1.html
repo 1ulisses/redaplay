@@ -8,6 +8,11 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
     />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png')}}"
+      type="image/x-icon"
+    />
   </head>
   <body>
     <div class="container">
@@ -25,7 +30,9 @@
             allowfullscreen
           ></iframe>
         </div>
-        <a href="{{ url_for('main') }}" class="back-button">Voltar para a Jornada</a>
+        <a href="{{ url_for('main') }}" class="back-button"
+          >Voltar para a Jornada</a
+        >
       </div>
     </div>
   </body>

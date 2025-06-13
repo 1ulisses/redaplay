@@ -3,20 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minha Jornada de Aprendizagem</title>
+    <title>Inicio - Redaplay</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png')}}"
+      type="image/x-icon"
     />
   </head>
   <body>
     <div class="container">
       <header class="header">
-        <h1>Minha Jornada de Aprendizagem</h1>
+        <h1>Redaplay</h1>
+        <div class="header-spacer"></div>
         <div class="header-icons">
-          <span class="icon">❤️ 5</span>
-          <span class="icon">🏆 100</span>
+          <span class="icon">🔥 {{ user.streak }}</span>
+          <span class="icon">💎 {{ user.diamonds }}</span>
         </div>
+        <a href="/logout" class="logout-button">
+          <span class="icon">↪ Sair</span>
+        </a>
       </header>
 
       <div class="main-content">
@@ -32,11 +41,7 @@
         <section class="unit-progress">
           <h2>Progresso da Unidade Atual</h2>
           <div class="lesson-list">
-            <a
-              href="/lesson1"
-              class="lesson-item"
-              data-id-lesson="1"
-            >
+            <a href="/lesson1" class="lesson-item" data-id-lesson="1">
               <span class="lesson-status" id="status-1"></span>
               <span class="lesson-title">Lição 1: Saudações</span>
             </a>

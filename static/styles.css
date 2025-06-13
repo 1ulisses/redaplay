@@ -19,13 +19,10 @@ body {
 /* container layout principal */
 .container {
   position: relative;
-  width: 850px;
-  min-height: 550px;
-  height: auto;
+  width: 100vw;
+  height: 100vh;
   background: #fff;
-  margin: 20px;
-  border-radius: 30px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: visible;
 }
 
@@ -35,11 +32,8 @@ body {
   color: white;
   padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   font-size: 1.2em;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
 .header h1 {
@@ -47,8 +41,27 @@ body {
   font-size: 1.5em;
 }
 
+.header-spacer {
+  flex: 1;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .header-icons .icon {
-  margin-left: 15px;
+  margin-left: 0;
+}
+
+.logout-button {
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 20px;
 }
 
 /* barra lateral, progresso e desafios */
@@ -112,7 +125,7 @@ body {
   background-color: #f3e5f5;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
@@ -152,7 +165,7 @@ body {
 }
 .lesson-item:not(.completed):not(.disabled):not(.locked)
   .lesson-status::before {
-  content: "→"; /* Arrow symbol */
+  content: "→"; 
 }
 
 /* licoes desligadas/trancadas */
@@ -191,14 +204,14 @@ body {
   margin-bottom: 10px;
   color: #01579b;
   font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* pagina de video */
 .video-page-container {
   background-color: #ffffff;
-  border-radius: 30px; /* changed from 10px to 30px */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 900px;
   margin: 20px auto;

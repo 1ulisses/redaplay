@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import date
 
 db = SQLAlchemy()
 
@@ -7,6 +8,9 @@ class User(db.Model):
     username = db.Column(db.String(150), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    streak = db.Column(db.Integer, default=0) 
+    last_login = db.Column(db.Date, default=None, nullable=True) 
+    diamonds = db.Column(db.Integer, default=0)
 
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,4 +26,3 @@ class Question(db.Model):
     option_c = db.Column(db.String(100), nullable=False)
     option_d = db.Column(db.String(100), nullable=False)
     quiz = db.relationship('Quiz', backref=db.backref('questions', lazy=True))
-    
