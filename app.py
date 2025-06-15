@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, User, Question, Quiz
+from models import db, User, Question, Quiz, Lesson
 from datetime import date, timedelta
 
 app = Flask(__name__)
@@ -21,6 +21,16 @@ with app.app_context():
     db.create_all()
     if not User.query.filter_by(email='d@d').first():
         db.session.add(new_user)
+    lesson_data = [
+        (1, "Lição 1: Saudações", "Conteúdo da Lição 1", "https://www.youtube.com/watch?v=lD44qe4_sCQ"),
+        (2, "Lição 2: Quiz de Redação", "Conteúdo da Lição 2", None),
+        (3, "Lição 3: Escreva sua Introdução", "Conteúdo da Lição 3", None),
+        (4, "Lição 4: Aula", "Conteúdo da Lição 4", "https://www.youtube.com/watch?v=dzLMxHjrS70"),
+        (5, "Lição 5: Quiz de Argumentação e Gramática", "Conteúdo da Lição 5", None),
+    ]
+    for number, title, content, video_url in lesson_data:
+        if not Lesson.query.filter_by(number=number).first():
+            db.session.add(Lesson(number=number, title=title, content=content, video_url=video_url))
     db.session.commit()
     
 @app.route('/', methods=['GET', 'POST'])
@@ -103,7 +113,8 @@ def delete():
 @app.route('/inicio', methods=['GET','POST'])
 def inicio():
     user = User.query.get(session['user_id'])
-    return render_template('main.html', user=user)
+    lessons = Lesson.query.order_by(Lesson.number).all()
+    return render_template('main.html', user=user, lessons=lessons)
 
 @app.route('/logout')
 def logout():
@@ -117,25 +128,14 @@ def perfil():
         return redirect('/')
     return render_template('profile.html', user=user)
 
-@app.route('/lesson1')
-def lesson1():
-    return render_template('/lessons/lesson1.html')
-
-@app.route('/lesson2')
-def lesson2():
-    return render_template('/lessons/lesson2.html')
-
-@app.route('/lesson3')
-def lesson3():
-    return render_template('/lessons/lesson3.html')
-
-@app.route('/lesson4')
-def lesson4():
-    return render_template('/lessons/lesson4.html')
-
-@app.route('/lesson5')
-def lesson5():
-    return render_template('/lessons/lesson5.html')
+@app.route('/lesson<int:lesson_number>')
+def lesson_dynamic(lesson_number):
+    lesson = Lesson.query.filter_by(number=lesson_number).first()
+    if not lesson:
+        return "Lição não encontrada.", 404
+    # Render the corresponding template, e.g., lesson1.html, lesson2.html, etc.
+    template_name = f'lessons/lesson{lesson_number}.html'
+    return render_template(template_name, lesson=lesson)
 
 if __name__ == '__main__':
     app.run(debug=True)

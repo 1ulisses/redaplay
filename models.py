@@ -15,6 +15,7 @@ class User(db.Model):
 
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer, unique=True, nullable=False)  # Add this line
     title = db.Column(db.String(150), nullable=False)
     content = db.Column(db.Text, nullable=False)
     video_url = db.Column(db.String(200), nullable=True)

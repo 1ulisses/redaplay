@@ -44,44 +44,16 @@
         <section class="unit-progress">
           <h2>Progresso da Unidade Atual</h2>
           <div class="lesson-list">
-            <a href="/lesson1" class="lesson-item" data-id-lesson="1">
-              <span class="lesson-status" id="status-1"></span>
-              <span class="lesson-title">Lição 1: Saudações</span>
-            </a>
-            <a
-              href="lesson2.html"
-              class="lesson-item disabled locked"
-              data-id-lesson="2"
-            >
-              <span class="lesson-status" id="status-2"></span>
-              <span class="lesson-title">Lição 2: Quiz de Redação</span>
-            </a>
-            <a
-              href="lesson3.html"
-              class="lesson-item disabled locked"
-              data-id-lesson="3"
-            >
-              <span class="lesson-status" id="status-3"></span>
-              <span class="lesson-title">Lição 3: Escreva sua Introdução</span>
-            </a>
-            <a
-              href="lesson4.html"
-              class="lesson-item disabled locked"
-              data-id-lesson="4"
-            >
-              <span class="lesson-status" id="status-4"></span>
-              <span class="lesson-title">Lição 4: Aula</span>
-            </a>
-            <a
-              href="lesson.html"
-              class="lesson-item disabled locked"
-              data-id-lesson="5"
-            >
-              <span class="lesson-status" id="status-5"></span>
-              <span class="lesson-title"
-                >Lição 5: Quiz de Argumentação e Gramática</span
+            {% for lesson in lessons %}
+              <a
+                href="/lesson{{ lesson.number }}"
+                class="lesson-item disabled locked"
+                data-id-lesson="{{ lesson.number }}"
               >
-            </a>
+                <span class="lesson-status" id="status-{{ lesson.number }}"></span>
+                <span class="lesson-title">{{ lesson.title }}</span>
+              </a>
+            {% endfor %}
           </div>
         </section>
 
