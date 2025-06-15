@@ -1,37 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meu Perfil</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style-perfil.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='profile.css') }}"
+    />
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <h1>Meu Perfil</h1>
+      <div class="header">
+        <h1>Meu Perfil</h1>
+      </div>
+
+      <div class="profile-content">
+        <h2>Informações do Usuário</h2>
+        <div class="profile-info">
+          <p><strong>Nome:</strong> {{ user.username }}</p>
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Data de Criação:</strong> {{ user.last_login }}</p>
         </div>
 
-        <div class="profile-content">
-            <div class="profile-image-container">
-                <img src="RedaPlay.png" alt="Foto de Perfil" class="profile-image">
-            </div>
-
-            <h2>Informações do Usuário</h2>
-            <div class="profile-info">
-                <p><strong>Nome:</strong> Usuário Exemplo</p>
-                <p><strong>Email:</strong> usuario.exemplo@email.com</p>
-                <p><strong>Data de Criação:</strong> 01/01/2023</p>
-            </div>
-
+        <div class="profile-content edit">
+          <form action="/update" method="POST">
+            <p><strong>Nome de Usuário:</strong></p>
+            <input type="hidden" name="email" value="{{ user.email }}" />
+            <input
+              type="text"
+              name="new-username"
+              placeholder="{{ user.username }}"
+              required
+            />
+            <p><strong>E-mail:</strong></p>
+            <input
+              type="email"
+              name="new-email"
+              placeholder="{{ user.email }}"
+              required
+            />
+            <p><strong>Senha:</strong></p>
+            <input
+              type="password"
+              name="new-password"
+              placeholder=" . . . "
+              required
+            />
             <div class="profile-actions">
-                <a href="#" class="profile-button edit">Editar Perfil</a>
-                <a href="#" class="profile-button delete">Excluir Perfil</a>
+              <button type="submit" class="profile-button edit">
+                Editar Perfil
+              </button>
             </div>
-
-            <a href="#" class="back-button">Voltar</a>
+          </form>
         </div>
+
+        <div class="profile-actions">
+          <form action="/delete" method="POST">
+            <button type="submit" class="profile-button delete">
+              Excluir Perfil
+            </button>
+          </form>
+        </div>
+
+        <a href="/inicio" class="back-button">Voltar</a>
+      </div>
     </div>
-</body>
+  </body>
 </html>

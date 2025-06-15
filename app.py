@@ -65,12 +65,31 @@ def login():
 
 @app.route('/update', methods=['POST'])
 def update():
-    return
-    # on button action=/update on form
-    # request form of user
-    # .query.filter_by(email=oldemail).first()
-    # if client set new ones
-    # redirect to /inicio
+    if 'user_id' not in session:
+        return redirect('/login')
+    user = User.query.get(session['user_id'])
+    if not user:
+        return redirect('/login')
+
+    new_email = request.form['new-email']
+    new_username = request.form['new-username']
+    new_password = request.form['new-password']
+
+    if new_email and new_email != user.email:
+        if User.query.filter_by(email=new_email).first():
+            return "E-mail já cadastrado.", 400
+        user.email = new_email
+
+    if new_username and new_username != user.username:
+        if User.query.filter_by(username=new_username).first():
+            return "Nome de usuário já cadastrado.", 400
+        user.username = new_username
+
+    if new_password:
+        user.password = generate_password_hash(new_password)
+
+    db.session.commit()
+    return redirect('/login')
     
 @app.route('/delete', methods=['POST'])
 def delete():
@@ -80,10 +99,6 @@ def delete():
         db.session.commit()
         session.pop('user_id', None)
     return redirect('/')
-    # on button action=/delete on form
-    # request form erase
-    # if client
-    # .delete and commit
 
 @app.route('/inicio', methods=['GET','POST'])
 def inicio():
@@ -94,6 +109,13 @@ def inicio():
 def logout():
     session.pop('user_id', None)
     return redirect('/')
+
+@app.route('/perfil')
+def perfil():
+    user = User.query.get(session['user_id'])
+    if not user:
+        return redirect('/')
+    return render_template('profile.html', user=user)
 
 @app.route('/lesson1')
 def lesson1():
