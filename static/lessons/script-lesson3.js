@@ -22,13 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Por favor, escreva uma introdução mais completa (mínimo 50 caracteres).');
             return;
         }
-
-        // **CRITICAL LINE:** Marks Lesson 3 as completed in localStorage
-        localStorage.setItem('lesson-3-completed', 'true');
-
-        alert('Sua introdução foi "concluída"! A Lição 3 foi marcada como completa.');
-
-        window.location.href = 'index.html';
+        
+        fetch('/api/user/lessons_completed')
+            .then(res => res.json())
+            .then(data => {
+                let completed = Array.isArray(data.lessons_completed) ? data.lessons_completed : [];
+                if (!completed.includes(3)) completed.push(3);
+                return fetch('/api/user/lessons_completed', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({lessons_completed: completed})
+                });
+            })
+            .then(() => {
+                alert('Sua introdução foi \"concluída\"! A Lição 3 foi marcada como completa.');
+                window.location.href = '/inicio';
+            });
     });
 
     introductionTextarea.dispatchEvent(new Event('input'));

@@ -12,6 +12,7 @@ class User(db.Model):
     last_login = db.Column(db.Date, default=None, nullable=True) 
     diamonds = db.Column(db.Integer, default=0)
     created = db.Column(db.Date, default=date.today)
+    lessons_completed = db.Column(db.String(200), default="")  # Comma-separated lesson numbers
 
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)

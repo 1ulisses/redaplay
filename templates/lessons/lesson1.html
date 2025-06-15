@@ -26,9 +26,20 @@
             const completeBtn = document.getElementById('complete-lesson-1-btn');
             if (completeBtn) {
                 completeBtn.addEventListener('click', () => {
-                    localStorage.setItem('lesson-1-completed', 'true');
-                    alert('Lição 1 concluída! 🎉');
-                    window.location.href = '/inicio'; // Redirect back
+                    fetch('/api/user/lessons_completed')
+                        .then(res => res.json())
+                        .then(data => {
+                            let completed = Array.isArray(data.lessons_completed) ? data.lessons_completed : [];
+                            if (!completed.includes(1)) completed.push(1);
+                            return fetch('/api/user/lessons_completed', {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({lessons_completed: completed})
+                            });
+                        })
+                        .then(() => {
+                            window.location.href = '/inicio';
+                        });
                 });
             }
         });

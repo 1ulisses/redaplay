@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Question, Quiz, Lesson
 from datetime import date, timedelta
@@ -133,9 +133,32 @@ def lesson_dynamic(lesson_number):
     lesson = Lesson.query.filter_by(number=lesson_number).first()
     if not lesson:
         return "Lição não encontrada.", 404
-    # Render the corresponding template, e.g., lesson1.html, lesson2.html, etc.
     template_name = f'lessons/lesson{lesson_number}.html'
     return render_template(template_name, lesson=lesson)
+
+@app.route('/api/user/lessons_completed', methods=['GET'])
+def get_lessons_completed():
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    user = User.query.get(session['user_id'])
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    completed = [int(x) for x in user.lessons_completed.split(',') if x]
+    return jsonify({'lessons_completed': completed})
+
+@app.route('/api/user/lessons_completed', methods=['POST'])
+def update_lessons_completed():
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    user = User.query.get(session['user_id'])
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    data = request.get_json()
+    completed = data.get('lessons_completed', [])
+    # Store as comma-separated string
+    user.lessons_completed = ','.join(str(x) for x in completed)
+    db.session.commit()
+    return jsonify({'success': True})
 
 if __name__ == '__main__':
     app.run(debug=True)

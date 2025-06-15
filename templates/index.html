@@ -22,6 +22,13 @@
 
       <div class="form-box login">
         <form method="POST" action="/login">
+          <div class="image-placeholder">
+            <img
+              src="{{ url_for('static', filename='favicon.png') }}"
+              alt="Logotipo da Jornada"
+              class="login-main-image"
+            />
+          </div>
           <input type="hidden" name="action" value="login" />
           <h1>Entrar</h1>
           <div class="input-box">
@@ -46,6 +53,13 @@
 
       <div class="form-box register">
         <form method="POST" action="/login">
+          <div class="image-placeholder">
+            <img
+              src="{{ url_for('static', filename='favicon.png') }}"
+              alt="Logotipo da Jornada"
+              class="login-main-image"
+            />
+          </div>
           <input type="hidden" name="action" value="register" />
           <h1>Registrar</h1>
           <div class="input-box">

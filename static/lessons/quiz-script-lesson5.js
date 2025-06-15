@@ -144,8 +144,17 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreSpan.textContent = score;
         totalQuestionsSpan.textContent = questions.length;
 
-        // **CRITICAL LINE:** Marks Lesson 5 as completed in localStorage
-        localStorage.setItem('lesson-5-completed', 'true');
+        fetch('/api/user/lessons_completed')
+            .then(res => res.json())
+            .then(data => {
+                let completed = Array.isArray(data.lessons_completed) ? data.lessons_completed : [];
+                if (!completed.includes(5)) completed.push(5); // <-- should be 5, not 2
+                return fetch('/api/user/lessons_completed', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({lessons_completed: completed})
+                });
+            });
     }
 
     function restartQuiz() {

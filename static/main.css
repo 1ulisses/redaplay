@@ -57,6 +57,17 @@ body {
   margin-left: 0;
 }
 
+.header-image-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-title {
+  max-width: 128px;
+  height: auto;
+}
+
 .icon-button {
   color: white;
   padding: 10px 15px;

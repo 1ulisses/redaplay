@@ -1,6 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Seleciona todos os itens de lição
     const lessonItems = document.querySelectorAll('.lesson-item');
+    let completedLessons = [];
+
+    // Fetch completed lessons from backend
+    function fetchCompletedLessons() {
+        return fetch('/api/user/lessons_completed')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data.lessons_completed)) {
+                    completedLessons = data.lessons_completed;
+                } else {
+                    completedLessons = [];
+                }
+            });
+    }
+
+    // Update completed lessons in backend
+    function saveCompletedLessons() {
+        fetch('/api/user/lessons_completed', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({lessons_completed: completedLessons})
+        });
+    }
 
     // Função para atualizar o status visual da lição
     const updateLessonStatus = (lessonId, isCompleted, isDisabled, isLocked) => {
@@ -42,42 +64,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Em seguida, verifica e habilita as lições com base no localStorage
         for (let i = 1; i <= lessonItems.length; i++) {
-            const isCompleted = localStorage.getItem(`lesson-${i}-completed`) === 'true';
+            const isCompleted = completedLessons.includes(i);
             if (isCompleted) {
                 updateLessonStatus(i, true, false, false); // Marca como concluída
             } else {
                 // Se a lição atual NÃO está concluída, verifica se a anterior ESTÁ concluída
                 // Isso significa que a lição atual deve ser ativa (não bloqueada)
-                if (i === 1 || localStorage.getItem(`lesson-${i-1}-completed`) === 'true') {
+                if (i === 1 || completedLessons.includes(i - 1)) {
                     updateLessonStatus(i, false, false, false); // Marca como ativa/próxima
                 }
             }
         }
     };
 
-    loadLessonStatuses(); // Chama ao carregar a página
+    fetchCompletedLessons().then(() => {
+        loadLessonStatuses(); // Chama ao carregar a página
 
-    // Adiciona o evento de clique a cada item de lição
-    lessonItems.forEach(item => {
-        item.addEventListener('click', (event) => {
-            const lessonId = parseInt(item.dataset.idLesson);
+        // Adiciona o evento de clique a cada item de lição
+        lessonItems.forEach(item => {
+            item.addEventListener('click', (event) => {
+                const lessonId = parseInt(item.dataset.idLesson);
 
-            // Somente prossegue se a lição NÃO estiver desabilitada/bloqueada
-            if (!item.classList.contains('disabled') && !item.classList.contains('locked')) {
-                // Marca a lição atual como concluída no localStorage
-                localStorage.setItem(`lesson-${lessonId}-completed`, 'true');
-                updateLessonStatus(lessonId, true, false, false); // Atualiza visualmente a lição atual
+                // Somente prossegue se a lição NÃO estiver desabilitada/bloqueada
+                if (!item.classList.contains('disabled') && !item.classList.contains('locked')) {
+                    if (!completedLessons.includes(lessonId)) {
+                        completedLessons.push(lessonId);
+                        saveCompletedLessons();
+                    }
+                    updateLessonStatus(lessonId, true, false, false); // Atualiza visualmente a lição atual
 
-                // Habilita a próxima lição
-                const nextLessonId = lessonId + 1;
-                if (nextLessonId <= lessonItems.length) {
-                    // Marca a próxima lição como ativa/próxima (não concluída, não desabilitada, não bloqueada)
-                    updateLessonStatus(nextLessonId, false, false, false);
+                    // Habilita a próxima lição
+                    const nextLessonId = lessonId + 1;
+                    if (nextLessonId <= lessonItems.length) {
+                        // Marca a próxima lição como ativa/próxima (não concluída, não desabilitada, não bloqueada)
+                        updateLessonStatus(nextLessonId, false, false, false);
+                    }
+                } else {
+                    // Previne a navegação se desabilitado
+                    event.preventDefault();
                 }
-            } else {
-                // Previne a navegação se desabilitado
-                event.preventDefault();
-            }
+            });
         });
     });
 });
