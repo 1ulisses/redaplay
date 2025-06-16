@@ -18,10 +18,18 @@
     <div class="container">
       <header class="header">
         <div class="header-image-title">
-          <img src="/static/favicon.png" alt="redaplay-mascot" class="header-mascot">
+          <img
+            src="/static/favicon.png"
+            alt="redaplay-mascot"
+            class="header-mascot"
+          />
         </div>
         <div class="header-image-title">
-          <img src="/static/images/logo.png" alt="redaplay-title" class="header-title">
+          <img
+            src="/static/images/logo.png"
+            alt="redaplay-title"
+            class="header-title"
+          />
         </div>
         <div class="header-spacer"></div>
         <div class="header-icons">
@@ -50,14 +58,17 @@
           <h2>Progresso da Unidade Atual</h2>
           <div class="lesson-list">
             {% for lesson in lessons %}
-              <a
-                href="/lesson{{ lesson.number }}"
-                class="lesson-item disabled locked"
-                data-id-lesson="{{ lesson.number }}"
-              >
-                <span class="lesson-status" id="status-{{ lesson.number }}"></span>
-                <span class="lesson-title">{{ lesson.title }}</span>
-              </a>
+            <a
+              href="/lesson{{ lesson.number }}"
+              class="lesson-item disabled locked"
+              data-id-lesson="{{ lesson.number }}"
+            >
+              <span
+                class="lesson-status"
+                id="status-{{ lesson.number }}"
+              ></span>
+              <span class="lesson-title">{{ lesson.title }}</span>
+            </a>
             {% endfor %}
           </div>
         </section>

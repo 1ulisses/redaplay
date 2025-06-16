@@ -1,8 +1,9 @@
+// Comentário por Matheus e Leandro
 document.addEventListener('DOMContentLoaded', () => {
     const lessonItems = document.querySelectorAll('.lesson-item');
     let completedLessons = [];
 
-    // Fetch completed lessons from backend
+    // pega questões completas
     function fetchCompletedLessons() {
         return fetch('/api/user/lessons_completed')
             .then(res => res.json())
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Update completed lessons in backend
+    // atualiza lições completadas
     function saveCompletedLessons() {
         fetch('/api/user/lessons_completed', {
             method: 'POST',

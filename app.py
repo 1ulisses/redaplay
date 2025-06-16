@@ -3,6 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Question, Quiz, Lesson
 from datetime import date, timedelta
 
+# comentários por Leandro
+
 # configuração app e banco de dados
 
 app = Flask(__name__)
@@ -33,18 +35,17 @@ with app.app_context():
         (4, "Lição 4: Aula", "Conteúdo da Lição 4", "https://www.youtube.com/watch?v=dzLMxHjrS70"),
         (5, "Lição 5: Quiz de Argumentação e Gramática", "Conteúdo da Lição 5", None),
     ]
-    for number, title, content, video_url in lesson_data:
-        if not Lesson.query.filter_by(number=number).first():
-            db.session.add(Lesson(number=number, title=title, content=content, video_url=video_url))
+    for number, title, content, video_url in lesson_data: 
+        if not Lesson.query.filter_by(number=number).first(): # verifica se a lição já existe
+            db.session.add(Lesson(number=number, title=title, content=content, video_url=video_url)) # cria lição
     db.session.commit()
 
-    # criação quiz questões lição 2
-    if not Quiz.query.filter_by(title="Quiz de Redação 1").first():
+    if not Quiz.query.filter_by(title="Quiz de Redação 1").first(): # quiz de redação 1
         quiz = Quiz(title="Quiz de Redação 1", description="Quiz sobre redação", total_questions=5)
-        db.session.add(quiz)
+        db.session.add(quiz) # adiciona quiz
         db.session.commit() 
 
-        questions = [
+        questions = [ 
             Question(
                 quiz_id=quiz.id,
                 text="Qual é a estrutura clássica de uma redação dissertativa-argumentativa?",
@@ -94,15 +95,14 @@ with app.app_context():
         db.session.add_all(questions)
         db.session.commit()
 
-    # criação quiz questões lição 5
-    if not Quiz.query.filter_by(title="Quiz de Argumentação e Gramática").first():
+    if not Quiz.query.filter_by(title="Quiz de Argumentação e Gramática").first(): # quiz de argumentação e gramática
         quiz5 = Quiz(
             title="Quiz de Argumentação e Gramática",
             description="Quiz sobre argumentação e gramática",
             total_questions=5
         )
-        db.session.add(quiz5)
-        db.session.commit()  # Commit para obter quiz5.id
+        db.session.add(quiz5) # adiciona quiz
+        db.session.commit()
 
         questions5 = [
             Question(
@@ -157,14 +157,14 @@ with app.app_context():
     # adição lição 2 e 5
     lesson2 = Lesson.query.filter_by(number=2).first()
     quiz2 = Quiz.query.filter_by(title="Quiz de Redação 1").first()
-    if lesson2 and quiz2 and lesson2.quiz_id != quiz2.id:
-        lesson2.quiz_id = quiz2.id
+    if lesson2 and quiz2 and lesson2.quiz_id != quiz2.id: # verifica se a lição 2 já tem o quiz
+        lesson2.quiz_id = quiz2.id # atribui quiz 2 à lição 2
         db.session.commit()
 
     lesson5 = Lesson.query.filter_by(number=5).first()
     quiz5 = Quiz.query.filter_by(title="Quiz de Argumentação e Gramática").first()
-    if lesson5 and quiz5 and lesson5.quiz_id != quiz5.id:
-        lesson5.quiz_id = quiz5.id
+    if lesson5 and quiz5 and lesson5.quiz_id != quiz5.id: # verifica se a lição 5 já tem o quiz
+        lesson5.quiz_id = quiz5.id # atribui quiz 5 à lição 5
         db.session.commit()
 
 # rota /
@@ -187,28 +187,29 @@ def login():
             if user and check_password_hash(user.password, password):
                 # lógica streak com login
                 if user.last_login is not None:
-                    if user.last_login == date.today() - timedelta(days=1):
+                    if user.last_login == date.today() - timedelta(days=1): # se último login for ontem
                         user.streak += 1
-                    elif user.last_login != date.today():
+                    elif user.last_login != date.today(): # se último login não é hoje e não é ontem
                         user.streak = 1
                 else:
                     user.streak = 1
                 user.last_login = date.today()
                 db.session.commit()
-                session['user_id'] = user.id
+                session['user_id'] = user.id # adiciona usuário à sessão
                 return redirect('/inicio')
             else:
                 error = 'Credenciais inválidas.'
         elif action == 'register':
             email = request.form['email']
-            if User.query.filter((User.username == username) | (User.email == email)).first():
+            if User.query.filter((User.username == username) | (User.email == email)).first(): 
+                # verifica se usuário ou email já existem
                 error = 'Nome de usuário ou E-mail já existente.'
             else:
                 hashed_pw = generate_password_hash(password)
                 new_user = User(username=username, email=email, password=hashed_pw)
                 db.session.add(new_user)
                 db.session.commit()
-                session['user_id'] = new_user.id
+                session['user_id'] = new_user.id # adiciona usuário à sessão
                 return redirect('/login')
     return render_template('index.html', error=error)
 
@@ -222,33 +223,33 @@ def logout():
 @app.route('/perfil')
 def perfil():
     user = User.query.get(session['user_id'])
-    if not user:
+    if not user:  # checa por usuário logado
         return redirect('/')
     return render_template('profile.html', user=user)
 
 @app.route('/update', methods=['POST'])
 def update():
-    if 'user_id' not in session:
+    if 'user_id' not in session: # checa por usuário logado
         return redirect('/login')
-    user = User.query.get(session['user_id'])
+    user = User.query.get(session['user_id']) # pega dados do usuário
     if not user:
         return redirect('/login')
-
+    # pega dados do formulário
     new_email = request.form['new-email']
     new_username = request.form['new-username']
     new_password = request.form['new-password']
 
-    if new_email and new_email != user.email:
+    if new_email and new_email != user.email: # se novo e-mail e e-mail diferente
         if User.query.filter_by(email=new_email).first():
             return "E-mail já cadastrado.", 400
         user.email = new_email
 
-    if new_username and new_username != user.username:
+    if new_username and new_username != user.username: # se novo nome de usuário e nome de usuário diferente
         if User.query.filter_by(username=new_username).first():
             return "Nome de usuário já cadastrado.", 400
         user.username = new_username
 
-    if new_password:
+    if new_password: # se nova senha
         user.password = generate_password_hash(new_password)
 
     db.session.commit()
@@ -256,7 +257,7 @@ def update():
 
 @app.route('/delete', methods=['POST'])
 def delete():
-    if 'user_id' in session:
+    if 'user_id' in session: # se usuário logado
         user = User.query.get(session['user_id'])
         db.session.delete(user)
         db.session.commit()
@@ -267,50 +268,50 @@ def delete():
 
 @app.route('/inicio', methods=['GET', 'POST'])
 def inicio():
-    user = User.query.get(session['user_id'])
-    lessons = Lesson.query.order_by(Lesson.number).all()
+    user = User.query.get(session['user_id']) # pega dados de usuário logado
+    lessons = Lesson.query.order_by(Lesson.number).all() # pega todas as lições
     return render_template('main.html', user=user, lessons=lessons)
 
-@app.route('/lesson<int:lesson_number>')
+@app.route('/lesson<int:lesson_number>') # rota baseada no número da lição
 def lesson_dynamic(lesson_number):
-    lesson = Lesson.query.filter_by(number=lesson_number).first()
+    lesson = Lesson.query.filter_by(number=lesson_number).first() # pega lição por número
     if not lesson:
         return "Lição não encontrada.", 404
-    template_name = f'lessons/lesson{lesson_number}.html'
+    template_name = f'lessons/lesson{lesson_number}.html' # procura template por número da lição
     return render_template(template_name, lesson=lesson)
 
 # API lições e quizzes
 
-@app.route('/api/user/lessons_completed', methods=['GET'])
+@app.route('/api/user/lessons_completed', methods=['GET']) # busca por lições completadas
 def get_lessons_completed():
-    if 'user_id' not in session:
+    if 'user_id' not in session: # se usuário não está logado
         return jsonify({'error': 'Not logged in'}), 401
     user = User.query.get(session['user_id'])
-    if not user:
+    if not user: # se usuário não encontrado
         return jsonify({'error': 'User not found'}), 404
-    completed = [int(x) for x in user.lessons_completed.split(',') if x]
+    completed = [int(x) for x in user.lessons_completed.split(',') if x] # lições completadas
     return jsonify({'lessons_completed': completed})
 
-@app.route('/api/user/lessons_completed', methods=['POST'])
+@app.route('/api/user/lessons_completed', methods=['POST']) # atualiza lições completadas
 def update_lessons_completed():
-    if 'user_id' not in session:
+    if 'user_id' not in session: # se usuário não está logado
         return jsonify({'error': 'Not logged in'}), 401
     user = User.query.get(session['user_id'])
-    if not user:
+    if not user: # se usuário não encontrado
         return jsonify({'error': 'User not found'}), 404
-    data = request.get_json()
-    completed = data.get('lessons_completed', [])
-    user.lessons_completed = ','.join(str(x) for x in completed)
+    data = request.get_json() # pega dados do usuário
+    completed = data.get('lessons_completed', []) # lições completadas
+    user.lessons_completed = ','.join(str(x) for x in completed) # converte lista em string
     db.session.commit()
     return jsonify({'success': True})
 
-@app.route('/api/lesson/<int:lesson_number>/questions', methods=['GET'])
+@app.route('/api/lesson/<int:lesson_number>/questions', methods=['GET']) # pega pergunta da questão da lição
 def get_lesson_questions(lesson_number):
     lesson = Lesson.query.filter_by(number=lesson_number).first()
-    if not lesson or not lesson.quiz:
+    if not lesson or not lesson.quiz: # se não tem lição ou não tem quiz
         return jsonify({'questions': []})
     questions = []
-    for q in lesson.quiz.questions:
+    for q in lesson.quiz.questions: # pega dados das questões do quiz
         questions.append({
             'question': q.text,
             'options': [q.option_a, q.option_b, q.option_c, q.option_d],
