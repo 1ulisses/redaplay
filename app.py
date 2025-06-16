@@ -3,24 +3,29 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Question, Quiz, Lesson
 from datetime import date, timedelta
 
+# configuração app e banco de dados
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///redaplay.db'
 db.init_app(app)
 
-new_user = User(
-    username='d',
-    email='d@d',
-    password=generate_password_hash('d'),
-    streak=5,
-    last_login=date.today(),
-    diamonds=10
-)
+# inicialização do banco de dados, criação de usuários e lições padrão
 
 with app.app_context():
     db.create_all()
-    if not User.query.filter_by(email='d@d').first():
+    # criação de usuário
+    if not User.query.filter_by(email='joao@joao.com').first():
+        new_user = User(
+            username='joao',
+            email='joao@joao.com',
+            password=generate_password_hash('1234'),
+            streak=5,
+            last_login=date.today(),
+            diamonds=10
+        )
         db.session.add(new_user)
+    # criação de lições
     lesson_data = [
         (1, "Lição 1: Saudações", "Conteúdo da Lição 1", "https://www.youtube.com/watch?v=lD44qe4_sCQ"),
         (2, "Lição 2: Quiz de Redação", "Conteúdo da Lição 2", None),
@@ -32,10 +37,14 @@ with app.app_context():
         if not Lesson.query.filter_by(number=number).first():
             db.session.add(Lesson(number=number, title=title, content=content, video_url=video_url))
     db.session.commit()
-    
+
+# rota /
+
 @app.route('/', methods=['GET', 'POST'])
 def welcome():
     return render_template('welcome.html')
+
+# rotas autenticação e registro
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -47,6 +56,7 @@ def login():
         if action == 'login':
             user = User.query.filter_by(username=username).first()
             if user and check_password_hash(user.password, password):
+                # lógica streak com login
                 if user.last_login is not None:
                     if user.last_login == date.today() - timedelta(days=1):
                         user.streak += 1
@@ -72,6 +82,20 @@ def login():
                 session['user_id'] = new_user.id
                 return redirect('/login')
     return render_template('index.html', error=error)
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect('/')
+
+# rotas crud e perfil do usuário
+
+@app.route('/perfil')
+def perfil():
+    user = User.query.get(session['user_id'])
+    if not user:
+        return redirect('/')
+    return render_template('profile.html', user=user)
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -100,7 +124,7 @@ def update():
 
     db.session.commit()
     return redirect('/login')
-    
+
 @app.route('/delete', methods=['POST'])
 def delete():
     if 'user_id' in session:
@@ -110,23 +134,13 @@ def delete():
         session.pop('user_id', None)
     return redirect('/')
 
-@app.route('/inicio', methods=['GET','POST'])
+# rotas principal, lições e quizzes
+
+@app.route('/inicio', methods=['GET', 'POST'])
 def inicio():
     user = User.query.get(session['user_id'])
     lessons = Lesson.query.order_by(Lesson.number).all()
     return render_template('main.html', user=user, lessons=lessons)
-
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    return redirect('/')
-
-@app.route('/perfil')
-def perfil():
-    user = User.query.get(session['user_id'])
-    if not user:
-        return redirect('/')
-    return render_template('profile.html', user=user)
 
 @app.route('/lesson<int:lesson_number>')
 def lesson_dynamic(lesson_number):
@@ -135,6 +149,8 @@ def lesson_dynamic(lesson_number):
         return "Lição não encontrada.", 404
     template_name = f'lessons/lesson{lesson_number}.html'
     return render_template(template_name, lesson=lesson)
+
+# API lições e quizzes
 
 @app.route('/api/user/lessons_completed', methods=['GET'])
 def get_lessons_completed():
@@ -155,10 +171,11 @@ def update_lessons_completed():
         return jsonify({'error': 'User not found'}), 404
     data = request.get_json()
     completed = data.get('lessons_completed', [])
-    # Store as comma-separated string
     user.lessons_completed = ','.join(str(x) for x in completed)
     db.session.commit()
     return jsonify({'success': True})
+
+# começar app
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -17,8 +17,6 @@
   <body>
     <div class="welcome-page">
       <div class="welcome-container">
-        <h1 class="welcome-greeting">Bem-vindo(a) ao Redaplay!</h1>
-
         <div class="image-placeholder">
           <img
             src="{{ url_for('static', filename='favicon.png') }}"
@@ -26,6 +24,8 @@
             class="welcome-main-image"
           />
         </div>
+
+        <h1 class="welcome-greeting">Bem-vindo(a) ao Redaplay!</h1>
 
         <a href="/login" class="start-journey-button">Iniciar Jornada!</a>
       </div>

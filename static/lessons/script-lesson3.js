@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             })
             .then(() => {
-                alert('Sua introdução foi \"concluída\"! A Lição 3 foi marcada como completa.');
                 window.location.href = '/inicio';
             });
     });

@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* ==========================================================================
+   ESTILO BASE
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
   margin: 0;
@@ -9,7 +12,9 @@
   list-style: none;
 }
 
-/* página principal, imagem de fundo */
+/* ==========================================================================
+   BODY E CONTAINER
+   ========================================================================== */
 body {
   display: flex;
   justify-content: center;
@@ -18,7 +23,6 @@ body {
   background: linear-gradient(90deg, #e2e2e2, #f0caff);
 }
 
-/* container layout principal */
 .container {
   position: relative;
   width: 100vw;
@@ -28,7 +32,9 @@ body {
   overflow: visible;
 }
 
-/* cabecalho */
+/* ==========================================================================
+   CABEÇALHO
+   ========================================================================== */
 .header {
   background-color: #c351ff;
   color: white;
@@ -68,6 +74,12 @@ body {
   height: auto;
 }
 
+.header-mascot {
+  max-width: 80px;
+  height: auto;
+  margin-right: 15px;
+}
+
 .icon-button {
   color: white;
   padding: 10px 15px;
@@ -81,13 +93,17 @@ body {
   font-weight: bold;
 }
 
-/* barra lateral, progresso e desafios */
+/* ==========================================================================
+   LAYOUT DO CONTEÚDO PRINCIPAL
+   ========================================================================== */
 .main-content {
   display: flex;
   padding: 20px;
 }
 
-/* navegacao barra lateral */
+/* ==========================================================================
+   BARRA LATERAL
+   ========================================================================== */
 .sidebar {
   width: 200px;
   padding-right: 20px;
@@ -113,7 +129,9 @@ body {
   padding-left: 16px;
 }
 
-/* progresso de unidade */
+/* ==========================================================================
+   LISTA DE LIÇÕES E PROGRESSO DA UNIDADE
+   ========================================================================== */
 .unit-progress {
   flex-grow: 1;
   padding: 0 20px;
@@ -133,7 +151,6 @@ body {
   gap: 15px;
 }
 
-/* items de licao */
 .lesson-item {
   display: flex;
   align-items: center;
@@ -151,55 +168,52 @@ body {
   background-color: #e1bee7;
 }
 
-/* status de licao */
 .lesson-status {
   width: 30px;
   height: 30px;
-  border-radius: 50%; 
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 15px;
   font-size: 1.2em;
-  color: white; 
+  color: white;
   font-weight: bold;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* licoes completa */
 .lesson-item.completed .lesson-status {
-  background-color: #4caf50; 
+  background-color: #4caf50;
   border: 2px solid #4caf50;
 }
 .lesson-item.completed .lesson-status::before {
-  content: "✔"; 
+  content: "✔";
 }
 
 .lesson-item:not(.completed):not(.disabled):not(.locked) .lesson-status {
-  background-color: #c351ff; 
+  background-color: #c351ff;
   border: 2px solid #c351ff;
 }
 .lesson-item:not(.completed):not(.disabled):not(.locked)
   .lesson-status::before {
-  content: "→"; 
+  content: "→";
 }
 
-/* licoes desligadas/trancadas */
 .lesson-item.disabled.locked {
-  opacity: 0.6; 
+  opacity: 0.6;
   cursor: not-allowed;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .lesson-item.disabled.locked .lesson-status {
-  background-color: #bdbdbd; 
+  background-color: #bdbdbd;
   border: 2px solid #bdbdbd;
 }
 .lesson-item.disabled.locked .lesson-status::before {
-  content: "🔒"; 
-  font-size: 1em; 
-  color: #424242; 
+  content: "🔒";
+  font-size: 1em;
+  color: #424242;
 }
 
 .lesson-title {
@@ -207,7 +221,9 @@ body {
   color: #333;
 }
 
-/* desafios */
+/* ==========================================================================
+   BARRA LATERAL DE DESAFIOS
+   ========================================================================== */
 .challenges {
   width: 250px;
   padding-left: 20px;
@@ -224,7 +240,9 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* pagina de video */
+/* ==========================================================================
+   CONTAINER DE VÍDEO
+   ========================================================================== */
 .video-page-container {
   background-color: #ffffff;
   border-radius: 30px;
@@ -244,7 +262,7 @@ body {
 
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%; 
+  padding-bottom: 56.25%;
   height: 0;
   overflow: visible;
   background-color: #000;
@@ -260,6 +278,9 @@ body {
   border: 0;
 }
 
+/* ==========================================================================
+   BOTÕES
+   ========================================================================== */
 .back-button {
   display: inline-block;
   background-color: #c351ff;
@@ -275,215 +296,219 @@ body {
   background-color: #7b1fa2;
 }
 
+/* ==========================================================================
+   QUIZZES
+   ========================================================================== */
 .quiz-container {
-    text-align: left; /* Align question text to the left */
+  text-align: left;
 }
 
 #quiz-content {
-    background-color: #fff;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    margin-bottom: 20px;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
 }
 
 #question-text {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    color: #6a1b9a; /* Header color */
-    font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #6a1b9a;
+  font-weight: bold;
 }
 
 #options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .option-item {
-    background-color: #f3e5f5; /* Light option color */
-    padding: 12px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, border 0.2s ease;
-    border: 1px solid transparent; /* Transparent border by default */
-    color: #333;
-    font-size: 1em;
+  background-color: #f3e5f5;
+  padding: 12px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border 0.2s ease;
+  border: 1px solid transparent;
+  color: #333;
+  font-size: 1em;
 }
 
 .option-item:hover {
-    background-color: #e1bee7; /* Lighter hover */
+  background-color: #e1bee7;
 }
 
 .option-item.selected {
-    border: 2px solid #c351ff; /* Purple border when selected */
-    background-color: #e1bee7;
+  border: 2px solid #c351ff;
+  background-color: #e1bee7;
 }
 
 .option-item.correct {
-    background-color: #e8f5e9; /* Light green for correct answer */
-    border: 2px solid #4CAF50; /* Green border */
-    color: #2e7d32;
-    font-weight: bold;
+  background-color: #e8f5e9;
+  border: 2px solid #4caf50;
+  color: #2e7d32;
+  font-weight: bold;
 }
 
 .option-item.incorrect {
-    background-color: #ffebee; /* Light red for incorrect answer */
-    border: 2px solid #d32f2f; /* Red border */
-    color: #c62828;
-    font-weight: bold;
+  background-color: #ffebee;
+  border: 2px solid #d32f2f;
+  color: #c62828;
+  font-weight: bold;
 }
 
 .quiz-button {
-    display: block;
-    width: 100%;
-    padding: 12px 20px;
-    background-color: #c351ff; /* Purple button */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease;
-    margin-top: 15px;
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #c351ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
 }
 
 .quiz-button:hover {
-    background-color: #7b1fa2;
+  background-color: #7b1fa2;
 }
 
 #feedback-container {
-    margin-top: 15px;
-    text-align: center;
+  margin-top: 15px;
+  text-align: center;
 }
 
 #feedback-text {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .feedback-correct {
-    color: #4CAF50; /* Green text for correct feedback */
+  color: #4caf50;
 }
 
 .feedback-incorrect {
-    color: #d32f2f; /* Red text for incorrect feedback */
+  color: #d32f2f;
 }
 
 #next-question-btn.hidden,
 #quiz-results.hidden,
 #submit-answer-btn.hidden {
-    display: none;
+  display: none;
 }
 
 #quiz-results h2 {
-    color: #9c27b0;
-    margin-bottom: 10px;
+  color: #9c27b0;
+  margin-bottom: 10px;
 }
 
 #quiz-results p {
-    font-size: 1.1em;
-    color: #333;
+  font-size: 1.1em;
+  color: #333;
 }
 
 #restart-quiz-btn {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
-/* --- Lesson 3 (Text Editor) Styles --- */
-
+/* ==========================================================================
+   LIÇÃO 3
+   ========================================================================== */
 .text-editor-container {
-    text-align: left; /* Align text within the container */
-    max-width: 900px; /* Slightly wider for the text area */
+  text-align: left;
+  max-width: 900px;
 }
 
 .instructions-box {
-    background-color: #e0f7fa; /* Light blue for instructions box */
-    border: 1px solid #b2ebf2;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    color: #006064; /* Dark blue for text */
+  background-color: #e0f7fa;
+  border: 1px solid #b2ebf2;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  color: #006064;
 }
 
 .instructions-box h2 {
-    color: #00796b; /* Teal for title */
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.4em;
-    border-bottom: 1px solid #80deea;
-    padding-bottom: 10px;
+  color: #00796b;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.4em;
+  border-bottom: 1px solid #80deea;
+  padding-bottom: 10px;
 }
 
 .instructions-box ul {
-    list-style: disc;
-    margin-left: 20px;
-    padding: 0;
-    font-size: 0.95em;
-    line-height: 1.5;
+  list-style: disc;
+  margin-left: 20px;
+  padding: 0;
+  font-size: 0.95em;
+  line-height: 1.5;
 }
 
 .instructions-box li {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .text-editor-area {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .text-editor-area h3 {
-    color: #6a1b9a; /* Purple for text area title */
-    margin-bottom: 15px;
-    font-size: 1.2em;
+  color: #6a1b9a;
+  margin-bottom: 15px;
+  font-size: 1.2em;
 }
 
 #introduction-text {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1.05em;
-    line-height: 1.6;
-    min-height: 250px; /* Minimum height for text area */
-    resize: vertical; /* Allow vertical resizing */
-    box-sizing: border-box; /* Include padding and border in total width */
-    font-family: sans-serif; /* Ensure same font as rest */
-    outline: none; /* Remove default outline on focus */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.05em;
+  line-height: 1.6;
+  min-height: 250px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #introduction-text:focus {
-    border-color: #9c27b0; /* Purple border on focus */
-    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.2); /* Soft shadow on focus */
+  border-color: #9c27b0;
+  box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.2);
 }
 
 .char-count {
-    text-align: right;
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 5px;
+  text-align: right;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
 }
 
-.main-button { /* Generic button for main actions, different from back button */
-    display: block;
-    width: 100%;
-    padding: 15px 25px;
-    background-color: #4CAF50; /* Green for "complete" or "submit" */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2em;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    margin-top: 25px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.main-button {
+  display: block;
+  width: 100%;
+  padding: 15px 25px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 25px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .main-button:hover {
-    background-color: #43a047;
-    transform: translateY(-2px); /* Slight lift effect */
+  background-color: #43a047;
+  transform: translateY(-2px);
 }

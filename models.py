@@ -3,6 +3,9 @@ from datetime import date
 
 db = SQLAlchemy()
 
+# modelos de dados
+
+# classe usuário
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
@@ -12,17 +15,19 @@ class User(db.Model):
     last_login = db.Column(db.Date, default=None, nullable=True) 
     diamonds = db.Column(db.Integer, default=0)
     created = db.Column(db.Date, default=date.today)
-    lessons_completed = db.Column(db.String(200), default="")  # Comma-separated lesson numbers
+    lessons_completed = db.Column(db.String(200), default="")  
 
+# classe lição
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    number = db.Column(db.Integer, unique=True, nullable=False)  # Add this line
+    number = db.Column(db.Integer, unique=True, nullable=False)
     title = db.Column(db.String(150), nullable=False)
     content = db.Column(db.Text, nullable=False)
     video_url = db.Column(db.String(200), nullable=True)
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=True)
     quiz = db.relationship('Quiz', backref=db.backref('lessons', lazy=True))
 
+# classe quiz
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
@@ -30,6 +35,8 @@ class Quiz(db.Model):
     total_questions = db.Column(db.Integer, default=0)
     total_correct = db.Column(db.Integer, default=0)
     total_incorrect = db.Column(db.Integer, default=0)
+
+# classe questão
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)

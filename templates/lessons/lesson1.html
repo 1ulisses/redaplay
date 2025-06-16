@@ -1,48 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lição 1: Saudações</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lição 1: Saudações - Redaplay</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='main.css') }}"
     />
-</head>
-<body>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png')}}"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
     <div class="video-page-container">
-        <h1>Lição 1: Saudações</h1>
-        <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/watch?v=lD44qe4_sCQ&list=PLu0iY-hrkT12L3zJ2DQ14ug4ToFqUfaiL" title="Vídeo da Lição 1: Saudações" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <p>Bem-vindo à sua primeira lição! Aprenda os fundamentos da escrita.</p>
-        <p>Assista ao vídeo e prepare-se para a próxima etapa!</p>
-        <button id="complete-lesson-1-btn" class="main-button">Concluir Lição 1</button>
-        <a href="/inicio" class="back-button">Voltar para a Jornada</a>
+      <h1>Lição 1: Saudações</h1>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/watch?v=lD44qe4_sCQ&list=PLu0iY-hrkT12L3zJ2DQ14ug4ToFqUfaiL"
+          title="Vídeo da Lição 1: Saudações"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p>Bem-vindo à sua primeira lição! Aprenda os fundamentos da escrita.</p>
+      <p>Assista ao vídeo e prepare-se para a próxima etapa!</p>
+      <button id="complete-lesson-1-btn" class="main-button">
+        Concluir Lição 1
+      </button>
+      <a href="/inicio" class="back-button">Voltar para a Jornada</a>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const completeBtn = document.getElementById('complete-lesson-1-btn');
-            if (completeBtn) {
-                completeBtn.addEventListener('click', () => {
-                    fetch('/api/user/lessons_completed')
-                        .then(res => res.json())
-                        .then(data => {
-                            let completed = Array.isArray(data.lessons_completed) ? data.lessons_completed : [];
-                            if (!completed.includes(1)) completed.push(1);
-                            return fetch('/api/user/lessons_completed', {
-                                method: 'POST',
-                                headers: {'Content-Type': 'application/json'},
-                                body: JSON.stringify({lessons_completed: completed})
-                            });
-                        })
-                        .then(() => {
-                            window.location.href = '/inicio';
-                        });
+      document.addEventListener("DOMContentLoaded", () => {
+        const completeBtn = document.getElementById("complete-lesson-1-btn");
+        if (completeBtn) {
+          completeBtn.addEventListener("click", () => {
+            fetch("/api/user/lessons_completed")
+              .then((res) => res.json())
+              .then((data) => {
+                let completed = Array.isArray(data.lessons_completed)
+                  ? data.lessons_completed
+                  : [];
+                if (!completed.includes(1)) completed.push(1);
+                return fetch("/api/user/lessons_completed", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ lessons_completed: completed }),
                 });
-            }
-        });
+              })
+              .then(() => {
+                window.location.href = "/inicio";
+              });
+          });
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
