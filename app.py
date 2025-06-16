@@ -38,6 +38,135 @@ with app.app_context():
             db.session.add(Lesson(number=number, title=title, content=content, video_url=video_url))
     db.session.commit()
 
+    # criação quiz questões lição 2
+    if not Quiz.query.filter_by(title="Quiz de Redação 1").first():
+        quiz = Quiz(title="Quiz de Redação 1", description="Quiz sobre redação", total_questions=5)
+        db.session.add(quiz)
+        db.session.commit() 
+
+        questions = [
+            Question(
+                quiz_id=quiz.id,
+                text="Qual é a estrutura clássica de uma redação dissertativa-argumentativa?",
+                correct_answer="A) Introdução, desenvolvimento e conclusão",
+                option_a="A) Introdução, desenvolvimento e conclusão",
+                option_b="B) Tema, título e parágrafo",
+                option_c="C) Argumento, exemplo e opinião",
+                option_d="D) Título, resumo e bibliografia"
+            ),
+            Question(
+                quiz_id=quiz.id,
+                text="O que é coesão textual?",
+                correct_answer="B) A forma como as ideias estão logicamente conectadas",
+                option_a="A) A repetição do mesmo termo em toda a redação",
+                option_b="B) A forma como as ideias estão logicamente conectadas",
+                option_c="C) O uso de palavras estrangeiras",
+                option_d="D) A pontuação usada no texto"
+            ),
+            Question(
+                quiz_id=quiz.id,
+                text="Qual dos elementos abaixo é essencial para a conclusão de uma redação do ENEM?",
+                correct_answer="C) Uma proposta de intervenção",
+                option_a="A) Um resumo do texto",
+                option_b="B) Uma pergunta retórica",
+                option_c="C) Uma proposta de intervenção",
+                option_d="D) Uma citação de impacto"
+            ),
+            Question(
+                quiz_id=quiz.id,
+                text="Qual das alternativas abaixo apresenta um exemplo de linguagem formal, adequada a uma redação?",
+                correct_answer="C) “Observa-se que o problema persiste na sociedade atual.”",
+                option_a="A) “A galera tá de olho nessa parada.”",
+                option_b="B) “Tipo assim, isso daí foi meio errado.”",
+                option_c="C) “Observa-se que o problema persiste na sociedade atual.”",
+                option_d="D) “Tava tudo certo até que deu ruim.”"
+            ),
+            Question(
+                quiz_id=quiz.id,
+                text="O que prejudica a coerência de um texto?",
+                correct_answer="B) Apresentar ideias contraditórias ou sem sentido",
+                option_a="A) Usar conectivos como \"portanto\" e \"além disso\"",
+                option_b="B) Apresentar ideias contraditórias ou sem sentido",
+                option_c="C) Fazer uma proposta de intervenção ao final",
+                option_d="D) Dividir o texto em parágrafos"
+            ),
+        ]
+        db.session.add_all(questions)
+        db.session.commit()
+
+    # criação quiz questões lição 5
+    if not Quiz.query.filter_by(title="Quiz de Argumentação e Gramática").first():
+        quiz5 = Quiz(
+            title="Quiz de Argumentação e Gramática",
+            description="Quiz sobre argumentação e gramática",
+            total_questions=5
+        )
+        db.session.add(quiz5)
+        db.session.commit()  # Commit para obter quiz5.id
+
+        questions5 = [
+            Question(
+                quiz_id=quiz5.id,
+                text="Qual das opções abaixo NÃO é uma boa estratégia de argumentação em uma redação?",
+                correct_answer="C) Apelar exclusivamente para a emoção do leitor",
+                option_a="A) Utilizar dados estatísticos confiáveis",
+                option_b="B) Usar exemplos históricos e sociais",
+                option_c="C) Apelar exclusivamente para a emoção do leitor",
+                option_d="D) Relacionar o tema com a Constituição ou leis brasileiras"
+            ),
+            Question(
+                quiz_id=quiz5.id,
+                text="O que caracteriza a linguagem da norma-padrão usada em redações?",
+                correct_answer="B) Clareza, formalidade e correção gramatical",
+                option_a="A) Uso de gírias e regionalismos",
+                option_b="B) Clareza, formalidade e correção gramatical",
+                option_c="C) Frases curtas e emotivas",
+                option_d="D) Repetição de palavras para reforçar o argumento"
+            ),
+            Question(
+                quiz_id=quiz5.id,
+                text="Em uma proposta de intervenção no ENEM, é necessário apresentar:",
+                correct_answer="C) A ação, o agente, o modo, o efeito e o detalhamento",
+                option_a="A) Somente o agente responsável pela solução",
+                option_b="B) Uma solução vaga e genérica",
+                option_c="C) A ação, o agente, o modo, o efeito e o detalhamento",
+                option_d="D) Apenas uma opinião sobre o problema"
+            ),
+            Question(
+                quiz_id=quiz5.id,
+                text="Qual das frases abaixo está escrita de forma correta segundo a norma culta?",
+                correct_answer="C) “As medidas foram tomadas com responsabilidade.”",
+                option_a="A) “Os problema do país é muito complicado.”",
+                option_b="B) “A gente vamos resolver isso amanhã.”",
+                option_c="C) “As medidas foram tomadas com responsabilidade.”",
+                option_d="D) “Eles vai apresentar o projeto.”"
+            ),
+            Question(
+                quiz_id=quiz5.id,
+                text="Qual é o tipo de discurso mais comum em uma redação dissertativa-argumentativa?",
+                correct_answer="B) Discurso indireto",
+                option_a="A) Discurso direto",
+                option_b="B) Discurso indireto",
+                option_c="C) Discurso poético",
+                option_d="D) Discurso informal"
+            ),
+        ]
+        db.session.add_all(questions5)
+        db.session.commit()
+
+    # adição lição 2 e 5
+    lesson2 = Lesson.query.filter_by(number=2).first()
+    quiz2 = Quiz.query.filter_by(title="Quiz de Redação 1").first()
+    if lesson2 and quiz2 and lesson2.quiz_id != quiz2.id:
+        lesson2.quiz_id = quiz2.id
+        db.session.commit()
+
+    lesson5 = Lesson.query.filter_by(number=5).first()
+    quiz5 = Quiz.query.filter_by(title="Quiz de Argumentação e Gramática").first()
+    if lesson5 and quiz5 and lesson5.quiz_id != quiz5.id:
+        lesson5.quiz_id = quiz5.id
+        db.session.commit()
+
 # rota /
 
 @app.route('/', methods=['GET', 'POST'])
@@ -174,6 +303,20 @@ def update_lessons_completed():
     user.lessons_completed = ','.join(str(x) for x in completed)
     db.session.commit()
     return jsonify({'success': True})
+
+@app.route('/api/lesson/<int:lesson_number>/questions', methods=['GET'])
+def get_lesson_questions(lesson_number):
+    lesson = Lesson.query.filter_by(number=lesson_number).first()
+    if not lesson or not lesson.quiz:
+        return jsonify({'questions': []})
+    questions = []
+    for q in lesson.quiz.questions:
+        questions.append({
+            'question': q.text,
+            'options': [q.option_a, q.option_b, q.option_c, q.option_d],
+            'correctAnswer': q.correct_answer
+        })
+    return jsonify({'questions': questions})
 
 # começar app
 
