@@ -6,7 +6,7 @@
 
 html, body {
   height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 body {
@@ -65,7 +65,7 @@ body {
    ========================================================================== */
 .welcome-greeting {
   color: #c351ff;
-  font-size: 3.5em;
+  font-size: 2em;
   margin: 0;
   font-weight: 700;
 }
@@ -103,41 +103,9 @@ body {
     box-shadow 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   letter-spacing: 0.5px;
-  margin-top: 20px;
 }
 
 .start-journey-button:hover {
   background-color: #7b1fa2;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-/* ==========================================================================
-   ANIMAÇÕES
-   ========================================================================== */
-
-   @media (max-width: 600px) {
-  .welcome-container {
-    padding: 30px 20px;
-    gap: 20px;
-  }
-  .welcome-greeting {
-    font-size: 2.8em;
-  }
-  .start-journey-button {
-    font-size: 1.4em;
-    padding: 15px 30px;
-  }
-}
-
-@media (max-width: 400px) {
-  .welcome-container {
-    padding: 25px 15px;
-  }
-  .welcome-greeting {
-    font-size: 2.2em;
-  }
-  .start-journey-button {
-    font-size: 1.2em;
-    padding: 12px 25px;
-  }
 }
