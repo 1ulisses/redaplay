@@ -3,6 +3,8 @@ from datetime import date
 
 db = SQLAlchemy()
 
+# comentários por Leandro
+
 # modelos de dados
 
 # classe usuário
