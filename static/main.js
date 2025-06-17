@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // pega questões completas
     function fetchCompletedLessons() {
-        return fetch('/api/user/lessons_completed')
-            .then(res => res.json())
+        return fetch('/api/user/lessons_completed') // pega lições completadas da api endpoint
+            .then(res => res.json()) // converte para json
             .then(data => {
-                if (Array.isArray(data.lessons_completed)) {
-                    completedLessons = data.lessons_completed;
-                } else {
+                if (Array.isArray(data.lessons_completed)) { // checa se é um array
+                    completedLessons = data.lessons_completed; // atribui lições completadas
+                } else { // se não for um array, inicializa como vazio
                     completedLessons = [];
                 }
             });
@@ -18,33 +18,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // atualiza lições completadas
     function saveCompletedLessons() {
-        fetch('/api/user/lessons_completed', {
+        fetch('/api/user/lessons_completed', { // envia lições completadas para a api endpoint
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({lessons_completed: completedLessons})
+            headers: {'Content-Type': 'application/json'}, // cabeçalho da api endpoint
+            body: JSON.stringify({lessons_completed: completedLessons}) // lições completadas para json
         });
     }
 
     // Função para atualizar o status visual da lição
-    const updateLessonStatus = (lessonId, isCompleted, isDisabled, isLocked) => {
-        const lessonItem = document.querySelector(`.lesson-item[data-id-lesson="${lessonId}"]`);
-        if (!lessonItem) return;
+    const updateLessonStatus = (lessonId, isCompleted, isDisabled, isLocked) => { // Atualiza o status visual da lição 
+        const lessonItem = document.querySelector(`.lesson-item[data-id-lesson="${lessonId}"]`); // Seleciona o item da lição
+        if (!lessonItem) return; // Se o item não existir, sai da função
 
-        if (isCompleted) {
+        if (isCompleted) { // para lição concluída
             lessonItem.classList.add('completed');
             lessonItem.classList.remove('disabled', 'locked');
             lessonItem.style.pointerEvents = 'auto';
             if (lessonId > 1) {
                 lessonItem.href = `lesson${lessonId}`;
             }
-        } else if (isDisabled && isLocked) {
+        } else if (isDisabled && isLocked) { // para lição desabilitada e bloqueada
             lessonItem.classList.remove('completed');
             lessonItem.classList.add('disabled', 'locked');
             lessonItem.style.pointerEvents = 'none';
             if (lessonId > 1) {
                 lessonItem.href = '#';
             }
-        } else {
+        } else { // para lição ativa/próxima
             lessonItem.classList.remove('completed', 'disabled', 'locked');
             lessonItem.style.pointerEvents = 'auto';
             if (lessonId > 1) {
@@ -53,31 +53,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Carrega os status iniciais das lições do localStorage e aplica as classes corretas
+    
     const loadLessonStatuses = () => {
-        // Primeiro, marca todas as lições como desabilitadas/bloqueadas por padrão, exceto a primeira
+        // Desabilita todas as lições exceto a primeira
         lessonItems.forEach(item => {
             const lessonId = parseInt(item.dataset.idLesson);
-            if (lessonId > 1) { // Todas as lições após a primeira são inicialmente bloqueadas
+            if (lessonId > 1) { 
                 updateLessonStatus(lessonId, false, true, true);
             }
         });
 
-        // Em seguida, verifica e habilita as lições com base no localStorage
+        // Atualiza o status de cada lição com base nas lições concluídas
         for (let i = 1; i <= lessonItems.length; i++) {
             const isCompleted = completedLessons.includes(i);
             if (isCompleted) {
-                updateLessonStatus(i, true, false, false); // Marca como concluída
+                updateLessonStatus(i, true, false, false); 
             } else {
-                // Se a lição atual NÃO está concluída, verifica se a anterior ESTÁ concluída
-                // Isso significa que a lição atual deve ser ativa (não bloqueada)
+                // Se a lição não estiver concluída, verifica se é a primeira lição ou se a lição anterior foi concluída
                 if (i === 1 || completedLessons.includes(i - 1)) {
-                    updateLessonStatus(i, false, false, false); // Marca como ativa/próxima
+                    updateLessonStatus(i, false, false, false); 
                 }
             }
         }
     };
-
+    // Carrega as lições concluídas e atualiza o status visual
     fetchCompletedLessons().then(() => {
         loadLessonStatuses(); // Chama ao carregar a página
 

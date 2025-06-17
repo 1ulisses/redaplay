@@ -1,13 +1,13 @@
 // comentários por Leandro
 document.addEventListener("DOMContentLoaded", () => {
   fetch("/api/lesson/2/questions") // pega perguntas da api
-    .then((res) => res.json())
+    .then((res) => res.json()) // converte oara json
     .then((data) => {
       // variáveis globais
       questions = data.questions;
-      let currentQuestionIndex = 0;
+      let currentQuestionIndex = 0;  // index da pergunta atual
       let score = 0;
-      let selectedOption = null;
+      let selectedOption = null; // opção selecionada
       // elementos DOM
       const questionText = document.getElementById("question-text");
       const optionsContainer = document.getElementById("options-container");
@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // carregar pergunta
         selectedOption = null;
         feedbackContainer.classList.add("hidden");
-        submitAnswerBtn.classList.remove("hidden"); // botão enviar resposta
-        nextQuestionBtn.classList.add("hidden"); // botão próxima pergunta
+        submitAnswerBtn.classList.remove("hidden"); 
+        nextQuestionBtn.classList.add("hidden"); 
         // carrega pergunta
         const currentQuestion = questions[currentQuestionIndex];
         questionText.textContent = currentQuestion.question;
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       function selectOption(optionDiv) {
-        // estilização pergunta
+        // estilização pergunta clicada
         const currentSelected = document.querySelector(".option-item.selected");
         if (currentSelected) {
           currentSelected.classList.remove("selected");
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         submitAnswerBtn.classList.add("hidden");
 
         Array.from(optionsContainer.children).forEach((optionDiv) => {
-          // estilização opções
+          // estilização opções, desabilita clique
           optionDiv.style.pointerEvents = "none";
           if (optionDiv.textContent === currentQuestion.correctAnswer) {
             optionDiv.classList.add("correct");
@@ -95,9 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
       function nextQuestion() {
         // próxima pergunta
         currentQuestionIndex++;
-        if (currentQuestionIndex < questions.length) {
+        if (currentQuestionIndex < questions.length) { // verifica se há mais perguntas
           loadQuestion();
-        } else {
+        } else { // se não houver mais perguntas
           showResults();
         }
       }
@@ -110,17 +110,18 @@ document.addEventListener("DOMContentLoaded", () => {
         totalQuestionsSpan.textContent = questions.length; // exibe total de perguntas
 
         fetch("/api/user/lessons_completed") // atualiza lições concluídas
-          .then((res) => res.json())
+          .then((res) => res.json()) // converte para json
           .then((data) => {
             let completed = Array.isArray(data.lessons_completed)
               ? data.lessons_completed
-              : [];
+              : []; // garante que seja um array, caso contrário, cria array vazio
             if (!completed.includes(2)) completed.push(2);
             return fetch("/api/user/lessons_completed", {
               // atualiza lições
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ lessons_completed: completed }),
+              headers: { "Content-Type": "application/json" }, // define cabeçalho para api endpoint
+              credentials: "include", // inclui cookies para autenticação
+              body: JSON.stringify({ lessons_completed: completed }), // converte para json
             });
           });
       }

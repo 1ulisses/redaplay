@@ -35,25 +35,26 @@
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const completeBtn = document.getElementById("complete-lesson-1-btn");
-        if (completeBtn) {
-          completeBtn.addEventListener("click", () => {
-            fetch("/api/user/lessons_completed")
-              .then((res) => res.json())
+      // comentários por Leandro 
+      document.addEventListener("DOMContentLoaded", () => { // espera DOM
+        const completeBtn = document.getElementById("complete-lesson-1-btn"); // pega o botão
+        if (completeBtn) { // verifica se o botão existe
+          completeBtn.addEventListener("click", () => { // adiciona evento de clique
+            fetch("/api/user/lessons_completed") // pega lições concluídas da api endpoint
+              .then((res) => res.json()) // converte resposta para json
               .then((data) => {
-                let completed = Array.isArray(data.lessons_completed)
+                let completed = Array.isArray(data.lessons_completed) // verifica se é um array, se não for, cria um novo array
                   ? data.lessons_completed
                   : [];
-                if (!completed.includes(1)) completed.push(1);
-                return fetch("/api/user/lessons_completed", {
+                if (!completed.includes(1)) completed.push(1); // adiciona lição 1 se não estiver concluída, se estiver, não faz nada
+                return fetch("/api/user/lessons_completed", { // envia lições concluídas para a api endpoint
                   method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ lessons_completed: completed }),
+                  headers: { "Content-Type": "application/json" }, // cabeçalho da api endpoint
+                  body: JSON.stringify({ lessons_completed: completed }), // lições concluídas para json
                 });
               })
               .then(() => {
-                window.location.href = "/inicio";
+                window.location.href = "/inicio"; // redireciona para a página de início
               });
           });
         }

@@ -35,19 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/api/user/lessons_completed") // pega lições completadas
       .then((res) => res.json()) // converte para json
       .then((data) => {
-        let completed = Array.isArray(data.lessons_completed) // verifica se array
+        let completed = Array.isArray(data.lessons_completed) // verifica se é um array, se não for, cria um novo array
           ? data.lessons_completed
           : [];
-        if (!completed.includes(3)) completed.push(3);
-        return fetch("/api/user/lessons_completed", {
-          // atualiza lições
+        if (!completed.includes(3)) completed.push(3); // adiciona lição 3 se não estiver concluída, se estiver, não faz nada
+        return fetch("/api/user/lessons_completed", {  // envia lições concluídas para a api endpoint
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ lessons_completed: completed }),
+          headers: { "Content-Type": "application/json" }, // cabeçalho da api endpoint
+          body: JSON.stringify({ lessons_completed: completed }), // lições concluídas para json
         });
       })
       .then(() => {
-        window.location.href = "/inicio"; // redireciona para início
+        window.location.href = "/inicio"; // redireciona para a página de início
       });
   });
 

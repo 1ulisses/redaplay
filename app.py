@@ -17,7 +17,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     # criação de usuário
-    if not User.query.filter_by(email='joao@joao.com').first():
+    if not User.query.filter_by(email='joao@joao.com').first(): # checa se usuário exemplo já existe
         new_user = User(
             username='joao',
             email='joao@joao.com',
@@ -289,7 +289,7 @@ def get_lessons_completed():
     user = User.query.get(session['user_id'])
     if not user: # se usuário não encontrado
         return jsonify({'error': 'User not found'}), 404
-    completed = [int(x) for x in user.lessons_completed.split(',') if x] # lições completadas
+    completed = [int(x) for x in user.lessons_completed.split(',') if x] # lições completadas, converte string em lista de inteiros
     return jsonify({'lessons_completed': completed})
 
 @app.route('/api/user/lessons_completed', methods=['POST']) # atualiza lições completadas
@@ -308,7 +308,7 @@ def update_lessons_completed():
 @app.route('/api/lesson/<int:lesson_number>/questions', methods=['GET']) # pega pergunta da questão da lição
 def get_lesson_questions(lesson_number):
     lesson = Lesson.query.filter_by(number=lesson_number).first()
-    if not lesson or not lesson.quiz: # se não tem lição ou não tem quiz
+    if not lesson or not lesson.quiz: # se não tem lição ou não tem quiz, json vazio
         return jsonify({'questions': []})
     questions = []
     for q in lesson.quiz.questions: # pega dados das questões do quiz
@@ -317,7 +317,7 @@ def get_lesson_questions(lesson_number):
             'options': [q.option_a, q.option_b, q.option_c, q.option_d],
             'correctAnswer': q.correct_answer
         })
-    return jsonify({'questions': questions})
+    return jsonify({'questions': questions}) # retorna json com perguntas
 
 # começar app
 

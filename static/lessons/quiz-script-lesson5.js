@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         optionsContainer.innerHTML = "";
 
         currentQuestion.options.forEach((option) => {
+          // cria opções
           const optionDiv = document.createElement("div");
           optionDiv.classList.add("option-item");
           optionDiv.textContent = option;
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         submitAnswerBtn.classList.add("hidden");
 
         Array.from(optionsContainer.children).forEach((optionDiv) => {
+          // estiliza opções
           optionDiv.style.pointerEvents = "none"; // desabilita clique
           if (optionDiv.textContent === currentQuestion.correctAnswer) {
             // resposta correta
@@ -95,32 +97,32 @@ document.addEventListener("DOMContentLoaded", () => {
       function nextQuestion() {
         // próxima pergunta
         currentQuestionIndex++;
-        if (currentQuestionIndex < questions.length) {
-          loadQuestion();
-        } else {
-          showResults();
+         if (currentQuestionIndex < questions.length) {// se houver mais peprguntas
+        } else { // se não houver mais perguntas
+          showResults(); // mostra resultados
         }
       }
 
       function showResults() {
-        // exibe resultados
+        // mostra resultados
         document.getElementById("quiz-content").classList.add("hidden");
         quizResults.classList.remove("hidden");
-        scoreSpan.textContent = score;
-        totalQuestionsSpan.textContent = questions.length;
+        scoreSpan.textContent = score; // exibe pontuação
+        totalQuestionsSpan.textContent = questions.length; // exibe total de perguntas
 
         fetch("/api/user/lessons_completed") // atualiza lições concluídas
-          .then((res) => res.json())
-          .then((data) => {
-            let completed = Array.isArray(data.lessons_completed) // verifica se é um array
+          .then((res) => res.json()) // converte para json
+          .then((data) => { 
+            let completed = Array.isArray(data.lessons_completed) // verifica se é um array, caso contrário, cria array vazio
               ? data.lessons_completed
               : [];
             if (!completed.includes(5)) completed.push(5);
             return fetch("/api/user/lessons_completed", {
               // atualiza lições
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ lessons_completed: completed }),
+              headers: { "Content-Type": "application/json" }, // define cabeçalho para api endpoint
+              credentials: "include", // inclui cookies para autenticação
+              body: JSON.stringify({ lessons_completed: completed }) // converte para json,
             });
           });
       }
@@ -137,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitAnswerBtn.addEventListener("click", submitAnswer);
       nextQuestionBtn.addEventListener("click", nextQuestion);
       restartQuizBtn.addEventListener("click", restartQuiz);
-
+      // carrega a primeira pergunta
       loadQuestion();
     });
 });
